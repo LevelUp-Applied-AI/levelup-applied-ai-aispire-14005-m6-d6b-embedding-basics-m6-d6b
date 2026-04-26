@@ -21,7 +21,14 @@ def load_glove(filepath):
     """
     # TODO: Read the file line by line, split each line into word and vector,
     #       and store in a dictionary
-    pass
+    embeddings = {}
+    with open(filepath, "r") as f:
+        for line in f:
+            parts = line.split()
+            word = parts[0]
+            vector = np.array(parts[1:], dtype=float)
+            embeddings[word] = vector
+    return embeddings
 
 
 def cosine_similarity(vec1, vec2):
@@ -35,7 +42,11 @@ def cosine_similarity(vec1, vec2):
         Float: cosine similarity score in [-1, 1].
     """
     # TODO: Compute the dot product divided by the product of norms
-    pass
+    norm1 = np.linalg.norm(vec1)
+    norm2 = np.linalg.norm(vec2)
+    if norm1 == 0 or norm2 == 0:
+        return 0.0
+    return float(np.dot(vec1, vec2) / (norm1 * norm2))
 
 
 def nearest_neighbors(word, embeddings, n=5):
@@ -52,7 +63,15 @@ def nearest_neighbors(word, embeddings, n=5):
     """
     # TODO: Compute cosine similarity between the query word and all other words,
     #       then return the top-n most similar
-    pass
+    query_vec = embeddings[word]
+    scores = []
+    for other_word, other_vec in embeddings.items():
+        if other_word == word:
+            continue
+        sim = cosine_similarity(query_vec, other_vec)
+        scores.append((other_word, sim))
+    scores.sort(key=lambda x: x[1], reverse=True)
+    return scores[:n]
 
 
 if __name__ == "__main__":
@@ -75,3 +94,5 @@ if __name__ == "__main__":
         neighbors = nearest_neighbors("king", glove, n=5)
         if neighbors:
             print(f"Nearest to 'king': {neighbors}")
+
+        print("testing done!")
