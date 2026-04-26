@@ -94,3 +94,5 @@ if __name__ == "__main__":
         neighbors = nearest_neighbors("king", glove, n=5)
         if neighbors:
             print(f"Nearest to 'king': {neighbors}")
+
+        print("testing done!")
