@@ -30,7 +30,7 @@ Complete the three functions in `drill.py`:
 2. Complete all functions in `drill.py`
 3. Run `pytest tests/ -v` to verify your work
 4. Open a PR to `main` — the autograder will run automatically
-5. Paste your PR URL into TalentLMS → Module 6 → Drill 6B to submit this assignment
+5. Paste your PR URL into TalentLMS → Module 6 Week B → Drill 6B to submit this assignment
 
 Resubmissions are accepted through Saturday of the assignment week.
 
