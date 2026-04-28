@@ -95,3 +95,23 @@ def test_nearest_neighbors(embeddings):
     assert "queen" in neighbor_words, (
         f"Expected 'queen' in top-5 neighbors of 'king', got {neighbor_words}"
     )
+    # Spec: results must be sorted by similarity descending
+    scores = [s for _, s in neighbors]
+    assert scores == sorted(scores, reverse=True), (
+        f"Neighbors must be sorted by similarity descending; got scores {scores}"
+    )
+
+
+def test_nearest_neighbors_n_parameter(embeddings):
+    """nearest_neighbors must honor the n parameter, not hardcode 5."""
+    for n in (1, 3, 10):
+        neighbors = nearest_neighbors("king", embeddings, n=n)
+        assert neighbors is not None, f"nearest_neighbors returned None for n={n}"
+        assert len(neighbors) == n, (
+            f"Expected {n} neighbors when called with n={n}, got {len(neighbors)} "
+            "(function must honor the n argument, not hardcode 5)"
+        )
+        scores = [s for _, s in neighbors]
+        assert scores == sorted(scores, reverse=True), (
+            f"Neighbors must be sorted by similarity descending for n={n}"
+        )
