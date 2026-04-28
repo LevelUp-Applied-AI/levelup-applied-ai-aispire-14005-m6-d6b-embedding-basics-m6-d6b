@@ -48,6 +48,22 @@ def test_cosine_similarity(embeddings):
     assert sim > 0.5, f"Expected cosine('king', 'queen') > 0.5, got {sim:.4f}"
 
 
+def test_cosine_similarity_zero_norm():
+    """Zero-norm input must return 0.0 (no division-by-zero blowup)."""
+    zero = np.zeros(50)
+    nonzero = np.ones(50)
+    # Both orderings + both-zero case
+    assert cosine_similarity(zero, nonzero) == 0.0, (
+        "cosine_similarity(zeros, nonzero) must return 0.0 (zero-norm guard)"
+    )
+    assert cosine_similarity(nonzero, zero) == 0.0, (
+        "cosine_similarity(nonzero, zeros) must return 0.0 (zero-norm guard)"
+    )
+    assert cosine_similarity(zero, zero) == 0.0, (
+        "cosine_similarity(zeros, zeros) must return 0.0 (both-zero case)"
+    )
+
+
 def test_cosine_similarity_dissimilar(embeddings):
     """Dissimilar words should have lower similarity than similar words."""
     assert "king" in embeddings and "queen" in embeddings and "banana" in embeddings

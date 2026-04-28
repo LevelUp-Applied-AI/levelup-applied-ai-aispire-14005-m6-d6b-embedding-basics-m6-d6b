@@ -32,9 +32,11 @@ def cosine_similarity(vec1, vec2):
         vec2: Second vector (numpy array).
 
     Returns:
-        Float: cosine similarity score in [-1, 1].
+        Float: cosine similarity score in [-1, 1]. If either vector has
+        zero norm, return 0.0 (do not divide by zero).
     """
-    # TODO: Compute the dot product divided by the product of norms
+    # TODO: Compute the dot product divided by the product of norms.
+    # TODO: If either norm is 0, return 0.0 instead of dividing by zero.
     pass
 
 
