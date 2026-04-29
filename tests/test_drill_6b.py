@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from drill import load_glove, cosine_similarity, nearest_neighbors
 
 
-GLOVE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "glove_5k_50d.txt")
+GLOVE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "glove_50k_50d.txt")
 
 
 @pytest.fixture
@@ -24,11 +24,11 @@ def embeddings():
 # ── Load GloVe ───────────────────────────────────────────────────────────
 
 def test_load_glove():
-    """GloVe loader should return a dict with ~5000 words, each a 50-d array."""
+    """GloVe loader should return a dict with ~50000 words, each a 50-d array."""
     result = load_glove(GLOVE_PATH)
     assert result is not None, "load_glove returned None"
     assert isinstance(result, dict), "load_glove must return a dict"
-    assert len(result) >= 4000, f"Expected ~5000 words, got {len(result)}"
+    assert len(result) >= 40000, f"Expected ~50000 words, got {len(result)}"
     # Check a sample entry
     sample_word = next(iter(result))
     vec = result[sample_word]
